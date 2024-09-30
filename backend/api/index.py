@@ -4,21 +4,17 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-# Enable CORS
+# Allow all origins in development; Vercel will handle CORS in production
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Allow your React app's URL
+    allow_origins=["*"],  # Allow all origins
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Allow all methods
+    allow_headers=["*"],  # Allow all headers
 )
 
 class PodcastRequest(BaseModel):
     podcast_url: str
-
-@app.get("/")
-async def root():
-    return {"message": "Welcome to the Podcast RAG API"}
 
 @app.post("/api/generate-post")
 async def generate_post(request: PodcastRequest):
