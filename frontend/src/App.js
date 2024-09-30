@@ -1,27 +1,38 @@
 import React, { useState } from 'react';
 
+const API_URL = process.env.REACT_APP_API_URL || '';
+
 function App() {
   const [podcastUrl, setPodcastUrl] = useState('');
   const [linkedInPost, setLinkedInPost] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLinkedInPost('');
+    setError('');
     try {
-      const response = await fetch('/api/generate-post', {
+      console.log('Sending request to:', `${API_URL}/api/generate-post`);
+      const response = await fetch(`${API_URL}/api/generate-post`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ podcast_url: podcastUrl })
       });
+      console.log('Response status:', response.status);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
+      console.log('Received data:', data);
       setLinkedInPost(data.post);
     } catch (error) {
-      console.error('Error:', error);
-      setLinkedInPost('An error occurred while generating the post.');
+      console.error('Error details:', error);
+      setError(`An error occurred: ${error.message}`);
     }
   };
 
   return (
-    <div>
+    <div style={{ padding: '20px' }}>
       <h1>Podcast LinkedIn Post Generator</h1>
       <form onSubmit={handleSubmit}>
         <input
@@ -39,6 +50,7 @@ function App() {
           <p>{linkedInPost}</p>
         </div>
       )}
+      {error && <p style={{color: 'red'}}>{error}</p>}
     </div>
   );
 }
