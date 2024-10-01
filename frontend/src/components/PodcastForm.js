@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
+import './PodcastForm.css';
+
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000'; // Fallback to localhost if env variable is not set
 
 function TextForm() {
   const [inputText, setInputText] = useState('');
   const [generatedPost, setGeneratedPost] = useState('');
-  const [error, setError] = useState('');
-
-  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+  const [loading, setLoading] = useState(false); // Loading state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setGeneratedPost('');
+    setLoading(true);  // Set loading state to true
 
     try {
       const response = await fetch(`${API_URL}/api/generate-post`, {
@@ -18,45 +18,48 @@ function TextForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ text: inputText }),  // Adjust to match backend expectations
+        body: JSON.stringify({ text: inputText }),
       });
 
-      if (!response.ok) {
-        const errorMsg = await response.text();
-        throw new Error(errorMsg || 'An error occurred');
-      }
-
-      const result = await response.text();
-      setGeneratedPost(result);
-    } catch (error) {
-      console.error('Error:', error.message, error);
-      setError(error.message);
+      const result = await response.json();
+      setGeneratedPost(result.generated_post);
+    } catch (err) {
+      console.error('Error:', err);
+    } finally {
+      setLoading(false);  // Reset loading state
     }
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <textarea
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
-          placeholder="Enter your text here"
-          rows="4"
-          required
-        />
-        <button type="submit">Generate Post</button>
-      </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {generatedPost && (
-        <div>
-          <h2>Generated Post:</h2>
+    <div className="podcast-form-container">
+      <div className="card">
+        <h2 className="form-title">🎙️ Medical Context Linkedin Posts</h2>
+        <form onSubmit={handleSubmit} className="form">
           <textarea
-            value={generatedPost}
-            readOnly
-            rows="10"
+            className="input"
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+            placeholder="Enter podcast details..."
+            rows="6"
+            required
           />
-        </div>
-      )}
+          {!loading && ( // Conditionally render the button only when not loading
+            <button
+              type="submit"
+              className="button"
+            >
+              📝 Generate Post
+            </button>
+          )}
+        </form>
+        {loading && <span className="loader"></span>} {/* Show loader when loading */}
+        {generatedPost && (
+          <div className="output">
+            <h3 className="output-title">Generated LinkedIn Post:</h3>
+            <div className="post-preview">{generatedPost}</div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

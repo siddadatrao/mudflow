@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
+from .tools.get_post import get_post_call
 
 # Define the router
 router = APIRouter()
@@ -12,8 +13,9 @@ class TextInput(BaseModel):
 @router.post("/api/generate-post")
 async def generate_post(input: TextInput):
     try:
+
         # Process the input text (for example, converting to uppercase)
-        processed_text = f"Processed: {input.text.upper()}"
+        processed_text = f"Processed: {get_post_call(input.text)}"
 
         # Return a JSON response
         return {"generated_post": processed_text}

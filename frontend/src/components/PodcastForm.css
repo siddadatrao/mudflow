@@ -1,0 +1,120 @@
+body {
+  background-color: #fdf6e3; /* Light cream background */
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.podcast-form-container {
+  width: 80vw; /* Relative width to viewport */
+  max-width: 900px; /* Set a max width */
+  min-width: 600px; /* Set a minimum width */
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle drop shadow */
+  padding: 3rem;
+  width: 100%; /* Full width within the responsive container */
+}
+
+.form-title {
+  font-size: 26px;
+  text-align: center;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.input {
+  width: 100%; /* Stretch the input field to fill the available space */
+  padding: 18px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  resize: vertical;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #a3c9d9; /* Softer, pastel blue */
+}
+
+.button {
+  width: 100%;
+  background-color: #a3c9d9; /* Pastel blue button */
+  color: white;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  height: 50px;  /* Fixed height to prevent squishing */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;  /* Ensure spinner is positioned correctly */
+}
+
+.button:disabled {
+  background-color: #d0e2ea; /* Lighter blue when disabled */
+  cursor: not-allowed;
+}
+
+.button:hover {
+  background-color: #88b2c8; /* Slightly darker on hover */
+}
+
+.loader {
+  display: block;
+  margin: 20px auto;
+  width: 30px;
+  height: 30px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #0073b1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.output {
+  margin-top: 24px;
+  padding: 24px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color: #fafafa;
+  max-height: 400px;  /* Limit the height for scrolling */
+  overflow-y: auto;  /* Enable scrolling if content exceeds height */
+}
+
+.output-title {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.post-preview {
+  background-color: #ffffff;
+  padding: 16px;
+  font-size: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  white-space: pre-wrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03); /* Lighter shadow */
+}
