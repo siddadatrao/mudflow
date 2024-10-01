@@ -16,6 +16,7 @@ def get_similar(namespace, index, query, open_ai_client, pinecone):
 		include_values=False,
 		include_metadata=True,
 	)
+	print(query_result)
 	query_result = query_results1['matches'][0]['metadata']['text']
 	return query_result
 

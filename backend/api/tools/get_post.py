@@ -4,7 +4,8 @@ from .utils import *
 def get_post_call(request):
     print("Getting post call")
     openai_connection, pinecone_connection, openai_key, pinecone_key = connections()
-    print("got connections")
+    print(openai_key)
+    print(pinecone_key)
     podcast_bit = get_similar("podcasts", "medrag", request, openai_connection, pinecone_connection)
     print("------------------")
     print(podcast_bit)
