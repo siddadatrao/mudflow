@@ -13,6 +13,7 @@ function TextForm() {
     setLoading(true);  // Set loading state to true
 
     try {
+      console.log("API URL:", API_URL);
       const response = await fetch(`${API_URL}/api/generate-post`, {
         method: 'POST',
         headers: {
