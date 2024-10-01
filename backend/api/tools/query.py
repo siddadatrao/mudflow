@@ -10,7 +10,6 @@ def templatize(query, context):
 def get_similar(namespace, index, query, open_ai_client, pinecone):
 	query_embedding = get_embedding(query, open_ai_client, model='text-embedding-3-small')
 	print("Got embedding")
-	print(query_embedding)
 	query_results1 = pinecone.Index(index).query(
 		namespace=namespace,
 		vector=query_embedding,
@@ -18,7 +17,8 @@ def get_similar(namespace, index, query, open_ai_client, pinecone):
 		include_values=False,
 		include_metadata=True,
 	)
-	print(query_result)
+	if query_results1 == None:
+		print("Pinecone Query failure")
 	query_result = query_results1['matches'][0]['metadata']['text']
 	return query_result
 
