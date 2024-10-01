@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: myapp
+    env: python
+    buildCommand: |
+      # Build backend
+      pip install -r backend/requirements.txt
+      # Build frontend
+      cd frontend && npm install && npm run build && cd ..
+    startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.16
+      - key: NODE_VERSION
+        value: 14.17.0
