@@ -5,6 +5,8 @@ const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000'; // Fal
 
 function TextForm() {
   const [inputText, setInputText] = useState('');
+  const [inputURL, setInputURL] = useState(''); // New state for URL input
+  const [includeURL, setIncludeURL] = useState(false); // State to track URL inclusion
   const [generatedPost, setGeneratedPost] = useState('');
   const [loading, setLoading] = useState(false); // Loading state
 
@@ -14,12 +16,19 @@ function TextForm() {
 
     try {
       console.log("API URL:", API_URL);
-      const response = await fetch(`${API_URL}/api/generate-post`, {
+      
+      // Determine the correct endpoint based on the URL inclusion
+      const endpoint = includeURL ? `${API_URL}/api/generate-post-podcast` : `${API_URL}/api/generate-post`;
+      
+      // Build the request body depending on whether the URL is included
+      const requestBody = includeURL ? { text: inputText, url: inputURL } : { text: inputText };
+
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ text: inputText }),
+        body: JSON.stringify(requestBody),
       });
 
       const result = await response.json();
@@ -34,7 +43,7 @@ function TextForm() {
   return (
     <div className="podcast-form-container">
       <div className="card">
-        <h2 className="form-title">🎙️ Medical Context Linkedin Posts</h2>
+        <h2 className="form-title">🎙️ Medical Context LinkedIn Posts</h2>
         <form onSubmit={handleSubmit} className="form">
           <textarea
             className="input"
@@ -44,6 +53,27 @@ function TextForm() {
             rows="6"
             required
           />
+          
+          {/* New URL input field, conditionally shown if includeURL is true */}
+          <div className="url-input">
+            <input
+              type="checkbox"
+              checked={includeURL}
+              onChange={(e) => setIncludeURL(e.target.checked)}
+            />
+            <label htmlFor="include-url">Include URL?</label>
+            {includeURL && (
+              <input
+                type="url"
+                className="input"
+                value={inputURL}
+                onChange={(e) => setInputURL(e.target.value)}
+                placeholder="Enter a URL (optional)"
+                required={includeURL}
+              />
+            )}
+          </div>
+
           {!loading && ( // Conditionally render the button only when not loading
             <button
               type="submit"

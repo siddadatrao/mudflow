@@ -51,16 +51,17 @@ def change_extension_to_txt(filename):
         return None
 
 def get_script(filename):
+    aai_key = os.environ.get('AAIKEY')
+
     aai.settings.api_key = "9383688bb8884261ac74da3484cc0c15"
     transcriber = aai.Transcriber()
 
     transcript = transcriber.transcribe(filename)
 
-    new_file_name = change_extension_to_txt(filename)
+    return transcript.text
 
-    save_transcript(transcript, new_file_name)
-
-    print(transcript.text)
+def cleanup(filename):
+    os.remove(filename)
 
 def sanitize_filename(filename):
     """Remove illegal characters from the filename and replace spaces with underscores."""
@@ -96,6 +97,7 @@ def download_podcast(url, save_directory):
         if mp3_response.status_code == 200:
             # Ensure the save directory exists
             if not os.path.exists(save_directory):
+                print("make directory")
                 os.makedirs(save_directory)
 
             # Create the full file path with the title and ".mp3" extension
@@ -105,7 +107,7 @@ def download_podcast(url, save_directory):
             with open(file_name, 'wb') as f:
                 f.write(mp3_response.content)
             print(f"MP3 file saved as {file_name}")
-            get_script(filename=file_name)
+            return file_name
         else:
             print("Failed to download the MP3 file.")
     else:
