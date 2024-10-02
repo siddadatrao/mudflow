@@ -54,18 +54,21 @@ function TextForm() {
             required
           />
           
-          {/* New URL input field, conditionally shown if includeURL is true */}
-          <div className="url-input">
-            <input
-              type="checkbox"
-              checked={includeURL}
-              onChange={(e) => setIncludeURL(e.target.checked)}
-            />
-            <label htmlFor="include-url">Include URL?</label>
+          {/* Updated URL input section */}
+          <div className="url-input-container">
+            <label className="url-checkbox-label">
+              <input
+                type="checkbox"
+                checked={includeURL}
+                onChange={(e) => setIncludeURL(e.target.checked)}
+                className="url-checkbox"
+              />
+              Include Podcast
+            </label>
             {includeURL && (
               <input
                 type="url"
-                className="input"
+                className="input url-input"
                 value={inputURL}
                 onChange={(e) => setInputURL(e.target.value)}
                 placeholder="Enter a URL (optional)"
