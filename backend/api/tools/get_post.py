@@ -2,12 +2,7 @@ from .query import *
 from .utils import *
 
 def get_post_call(request):
-    print("Getting post call")
     openai_connection, pinecone_connection, openai_key, pinecone_key = connections()
-    print(openai_key)
-    print(pinecone_key)
-    print(openai_connection)
-    print(pinecone_connection)
     podcast_bit = get_similar("podcasts", "medrag", request, openai_connection, pinecone_connection)
     print("------------------")
     print(podcast_bit)
