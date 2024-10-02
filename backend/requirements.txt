@@ -5,3 +5,4 @@ pinecone-client
 assemblyai
 nltk
 requests
+beautifulsoup4
