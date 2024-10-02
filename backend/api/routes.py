@@ -14,7 +14,6 @@ class podcast_TextInput(BaseModel):
 # Define the request body model using Pydantic
 class vannilla_TextInput(BaseModel):
     text: str
-    url: str
 
 # POST endpoint to process the input text
 @router.post("/api/generate-post")
