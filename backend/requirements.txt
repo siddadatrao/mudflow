@@ -6,3 +6,4 @@ assemblyai
 nltk
 requests
 beautifulsoup4
+pandas
