@@ -2,7 +2,11 @@ import openai
 import pinecone
 
 def get_embedding(text, open_ai_client, model="text-embedding-3-small"):
-	return open_ai_client.embeddings.create(input = [text], model=model).data[0].embedding
+	try:
+		return open_ai_client.embeddings.create(input=[text], model=model).data[0].embedding
+	except Exception as e:
+		print(f"Error in get_embedding: {e}")
+	raise
 
 def templatize(query, context):
 	return "Use following external resource in creating the linkedin post:" + context + " Create the post based on this description: " + query
