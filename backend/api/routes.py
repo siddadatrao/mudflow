@@ -7,13 +7,18 @@ from .tools.get_mp3 import download_podcast, get_script, cleanup
 router = APIRouter()
 
 # Define the request body model using Pydantic
-class TextInput(BaseModel):
+class podcast_TextInput(BaseModel):
+    text: str
+    url: str
+
+# Define the request body model using Pydantic
+class vannilla_TextInput(BaseModel):
     text: str
     url: str
 
 # POST endpoint to process the input text
 @router.post("/api/generate-post")
-async def generate_post(input: TextInput):
+async def generate_post(input: vannilla_TextInput):
     try:
 
         # Process the input text (for example, converting to uppercase)
@@ -25,7 +30,7 @@ async def generate_post(input: TextInput):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/api/generate-post-podcast")
-async def generate_post_podcast(input: TextInput):
+async def generate_post_podcast(input: podcast_TextInput):
     print(input.url)
     try:
         # Convert url of podcast to podcast text
