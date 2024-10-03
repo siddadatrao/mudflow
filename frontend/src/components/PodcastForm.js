@@ -63,7 +63,7 @@ function TextForm() {
                 onChange={(e) => setIncludeURL(e.target.checked)}
                 className="url-checkbox"
               />
-              Include Podcast
+              Include URL?
             </label>
             {includeURL && (
               <input

@@ -3,17 +3,17 @@ body {
   background-color: #fdf6e3; /* Light cream background */
   font-family: 'Inter', sans-serif;
   margin: 0;
-  padding: 0;
+  padding: 20px; /* Added padding to ensure buffer around the card */
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh; /* Ensures the container takes full height */
+  box-sizing: border-box;
 }
 
 .podcast-form-container {
-  width: 80vw; /* Relative width to viewport */
+  width: 90vw; /* Smaller width for better fit on mobile */
   max-width: 900px; /* Set a max width */
-  min-width: 600px; /* Set a minimum width */
   margin: 0 auto;
   padding: 2rem;
   display: flex;
@@ -25,7 +25,8 @@ body {
   border-radius: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle drop shadow */
   padding: 3rem;
-  width: 100%; /* Full width within the responsive container */
+  width: 100%;
+  margin-top: 20px; /* Adds buffer to the top of the card */
 }
 
 .form-title {
